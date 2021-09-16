@@ -1,22 +1,49 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Search from './pages/Search';
+import { Provider } from 'react-redux'
+import Store from './utils/Store';
 
-class App extends Component {
-  render() {
+
+function App() {
+
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          type: prefersDarkMode ? 'dark' : 'light',
+
+          primary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
+          },
+        },
+      }),
+    [prefersDarkMode],
+  );
+ 
+ 
+
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Provider store={Store}>
+          <Search />
+        </Provider>
+        
+      </ThemeProvider>
+     
     );
   }
-}
+
 
 export default App;
