@@ -4,7 +4,8 @@ const axios = require('axios');
 router.get('/images', async (req, res) => {
     axios({
         method: 'GET',
-        url: `https://images-api.nasa.gov/search?q=${req.query.title}&media_type=image`
+        url: `https://images-api.nasa.gov/search?q=${req.query.title}&media_type=image`,
+        
     }).then(function (response) {
         res.json(response.data.images.map(el => (
             {
@@ -18,3 +19,5 @@ router.get('/images', async (req, res) => {
         res.json(error);
     })
 });
+
+module.exports = router;
